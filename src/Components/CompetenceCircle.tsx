@@ -49,12 +49,12 @@ const CompetenceCircle: FC<Props> = ({ centerX, centerY, radius }) => {
       offsetY = 5;
     }
     if (angle > 3) {
-      offsetX = -77;
+      offsetX = -85;
       offsetY = -12;
     }
     if (angle > 3.5) {
+      offsetX = -100;
       offsetY = -30;
-      offsetX = -95;
     }
 
     return { x, y, offsetX, offsetY, angle };
@@ -66,8 +66,8 @@ const CompetenceCircle: FC<Props> = ({ centerX, centerY, radius }) => {
       width={radius * 4}
       style={{
         position: "absolute",
-        left: centerX - radius,
-        top: centerY - radius,
+        left: centerX - (radius*2),
+        top: centerY - (radius*2),
       }}
     >
       <circle
@@ -87,7 +87,7 @@ const CompetenceCircle: FC<Props> = ({ centerX, centerY, radius }) => {
             <text
               x={x}
               y={y + offsetY}
-              className="text-[10px]"
+              className="text-[10px] font-bold"
               textAnchor={
                 angle < -1.5 || (angle > 1.5 && angle < 2) ? "middle" : "start"
               }

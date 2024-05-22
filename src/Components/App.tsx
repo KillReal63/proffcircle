@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className="relative">
-      {/* <SkillsCircle centerX={centerX} centerY={centerY} radius={267} /> */}
+      <SkillsCircle centerX={centerX} centerY={centerY} radius={267} />
       <CompetenceCircle centerX={centerX} centerY={centerY} radius={128} />
     </div>
   );
