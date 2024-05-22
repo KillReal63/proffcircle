@@ -1,4 +1,8 @@
+import React, { useContext } from "react";
 import { FC } from "react";
+import ActiveCircle from "./ActiveCircle";
+import DisableCircle from "./DisableCircle";
+import CompetenceContext from "./CompetenceContext";
 
 type Props = {
   centerX: number;
@@ -7,19 +11,13 @@ type Props = {
 };
 
 const CompetenceCircle: FC<Props> = ({ centerX, centerY, radius }) => {
-  const competenceArray = [
-    "Финансовый аналитик",
-    "Предприниматель",
-    "Руководитель финансового департамента компании",
-    "Менеджер проекта",
-    "Финансовый менеджер",
-    "Продуктовый аналитик",
-    "Руководитель финансового продукта",
-    "Менеджер по цифровой трансформации",
-  ];
+  const competenceContext = useContext(CompetenceContext);
+  if (!competenceContext) return null;
+  const { selectCompetence, data } = competenceContext;
 
   const smallCircles = (index: number) => {
-    const angle = (index / competenceArray.length) * 2 * Math.PI - Math.PI / 2;
+    const angle =
+      (index / data.map((el) => el.name).length) * 2 * Math.PI - Math.PI / 2;
     const x = radius * 2 + radius * Math.cos(angle);
     const y = radius * 2 + radius * Math.sin(angle);
     let offsetX = 0;
@@ -66,8 +64,8 @@ const CompetenceCircle: FC<Props> = ({ centerX, centerY, radius }) => {
       width={radius * 4}
       style={{
         position: "absolute",
-        left: centerX - (radius*2),
-        top: centerY - (radius*2),
+        left: centerX - radius * 2,
+        top: centerY - radius * 2,
       }}
     >
       <circle
@@ -78,31 +76,40 @@ const CompetenceCircle: FC<Props> = ({ centerX, centerY, radius }) => {
         stroke="#ADADAD"
         strokeWidth={2.35}
       />
-      {competenceArray.map((el, index) => {
-        const { x, y, offsetX, offsetY, angle } = smallCircles(index);
-        const name = el.split(" ");
-        return (
-          <>
-            <circle cx={x} cy={y} r={12} fill="#ADADAD" />
-            <text
-              x={x}
-              y={y + offsetY}
-              className="text-[10px] font-bold"
-              textAnchor={
-                angle < -1.5 || (angle > 1.5 && angle < 2) ? "middle" : "start"
-              }
-            >
-              {name.map((el) => {
-                return (
-                  <tspan x={x + offsetX} dy={12}>
-                    {el}
-                  </tspan>
-                );
-              })}
-            </text>
-          </>
-        );
-      })}
+      {data
+        .map((el) => el.name)
+        .map((el, index) => {
+          const { x, y, offsetX, offsetY, angle } = smallCircles(index);
+          const name = el.split(" ");
+          return (
+            <React.Fragment key={index}>
+              {!selectCompetence ? (
+                <DisableCircle x={x} y={y} />
+              ) : (
+                <ActiveCircle x={x} y={y} />
+              )}
+
+              <text
+                x={x}
+                y={y + offsetY}
+                className="text-[10px] font-bold"
+                textAnchor={
+                  angle < -1.5 || (angle > 1.5 && angle < 2)
+                    ? "middle"
+                    : "start"
+                }
+              >
+                {name.map((el, i) => {
+                  return (
+                    <tspan key={i} x={x + offsetX} dy={12}>
+                      {el}
+                    </tspan>
+                  );
+                })}
+              </text>
+            </React.Fragment>
+          );
+        })}
     </svg>
   );
 };

@@ -1,3 +1,4 @@
+import React from "react";
 import { FC } from "react";
 
 type Props = {
@@ -84,7 +85,7 @@ const SkillsCircle: FC<Props> = ({ centerX, centerY, radius }) => {
       {skillsArray.map((el, index) => {
         const { x, y, offsetX, offsetY } = smallCircles(index);
         return (
-          <>
+          <React.Fragment key={index}>
             <text
               x={x + offsetX}
               y={y + offsetY}
@@ -94,7 +95,7 @@ const SkillsCircle: FC<Props> = ({ centerX, centerY, radius }) => {
               {el}
             </text>
             <circle cx={x} cy={y} r={smallRadius} fill="#FFD4AD" />
-          </>
+          </React.Fragment>
         );
       })}
     </svg>
