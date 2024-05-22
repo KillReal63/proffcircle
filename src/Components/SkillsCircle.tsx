@@ -1,4 +1,12 @@
-const BigCircle = () => {
+import { FC } from "react";
+
+type Props = {
+  centerX: number;
+  centerY: number;
+  radius: number;
+};
+
+const SkillsCircle: FC<Props> = ({ centerX, centerY, radius }) => {
   const skillsArray = [
     "Power BI",
     "VBA",
@@ -19,10 +27,7 @@ const BigCircle = () => {
     "Excel",
     "SQL",
   ];
-  const radius = 267;
   const smallRadius = 14;
-  const centerX = 327.5;
-  const centerY = 304;
   const smallCircles = (index: number) => {
     const angle = (index / skillsArray.length) * 2 * Math.PI - Math.PI / 2;
     const x = centerX + radius * Math.cos(angle);
@@ -62,35 +67,38 @@ const BigCircle = () => {
   };
 
   return (
-    <>
-      <svg
-        width="655"
-        height="608"
-        viewBox="0 0 655 608"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle
-          cx={centerX}
-          cy={centerY}
-          r={radius}
-          fill="none"
-          stroke="#ADADAD"
-          strokeWidth="2.35"
-        />
-        {skillsArray.map((el, index) => {
-          const { x, y, offsetX, offsetY } = smallCircles(index);
-          return (
-            <>
-              <text x={x + offsetX} y={y + offsetY} className="text-[10px] ">
-                {el}
-              </text>
-              <circle cx={x} cy={y} r={smallRadius} fill="#FFD4AD" />
-            </>
-          );
-        })}
-      </svg>
-    </>
+    <svg
+      width="655"
+      height="608"
+      viewBox="0 0 655 608"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx={centerX}
+        cy={centerY}
+        r={radius}
+        fill="none"
+        stroke="#ADADAD"
+        strokeWidth="2.35"
+      />
+      {skillsArray.map((el, index) => {
+        const { x, y, offsetX, offsetY } = smallCircles(index);
+        return (
+          <>
+            <text
+              x={x + offsetX}
+              y={y + offsetY}
+              //не меняется цвет
+              className="text-[10px] font-bold"
+            >
+              {el}
+            </text>
+            <circle cx={x} cy={y} r={smallRadius} fill="#FFD4AD" />
+          </>
+        );
+      })}
+    </svg>
   );
 };
 
-export default BigCircle;
+export default SkillsCircle;
