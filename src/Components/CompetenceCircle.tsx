@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import { FC } from "react";
-import ActiveCircle from "./ActiveCircle";
-import DisableCircle from "./DisableCircle";
 import CompetenceContext from "./CompetenceContext";
+import CompetenceSmallCircles from "./CompetenceSmallCircles";
 
 type Props = {
   centerX: number;
@@ -13,7 +12,7 @@ type Props = {
 const CompetenceCircle: FC<Props> = ({ centerX, centerY, radius }) => {
   const competenceContext = useContext(CompetenceContext);
   if (!competenceContext) return null;
-  const { selectCompetence, data } = competenceContext;
+  const { data } = competenceContext;
 
   const smallCircles = (index: number) => {
     const angle =
@@ -76,40 +75,31 @@ const CompetenceCircle: FC<Props> = ({ centerX, centerY, radius }) => {
         stroke="#ADADAD"
         strokeWidth={2.35}
       />
-      {data
-        .map((el) => el.name)
-        .map((el, index) => {
-          const { x, y, offsetX, offsetY, angle } = smallCircles(index);
-          const name = el.split(" ");
-          return (
-            <React.Fragment key={index}>
-              {!selectCompetence ? (
-                <DisableCircle x={x} y={y} />
-              ) : (
-                <ActiveCircle x={x} y={y} />
-              )}
-
-              <text
-                x={x}
-                y={y + offsetY}
-                className="text-[10px] font-bold"
-                textAnchor={
-                  angle < -1.5 || (angle > 1.5 && angle < 2)
-                    ? "middle"
-                    : "start"
-                }
-              >
-                {name.map((el, i) => {
-                  return (
-                    <tspan key={i} x={x + offsetX} dy={12}>
-                      {el}
-                    </tspan>
-                  );
-                })}
-              </text>
-            </React.Fragment>
-          );
-        })}
+      {data.map((el, index) => {
+        const { x, y, offsetX, offsetY, angle } = smallCircles(index);
+        const name = el.name.split(" ");
+        return (
+          <React.Fragment key={index}>
+            <CompetenceSmallCircles x={x} y={y} id={el.id} />
+            <text
+              x={x}
+              y={y + offsetY}
+              className="text-[10px] font-bold"
+              textAnchor={
+                angle < -1.5 || (angle > 1.5 && angle < 2) ? "middle" : "start"
+              }
+            >
+              {name.map((el, i) => {
+                return (
+                  <tspan key={i} x={x + offsetX} dy={12}>
+                    {el}
+                  </tspan>
+                );
+              })}
+            </text>
+          </React.Fragment>
+        );
+      })}
     </svg>
   );
 };
