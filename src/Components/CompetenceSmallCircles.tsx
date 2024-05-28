@@ -1,7 +1,5 @@
 import { FC, useContext } from "react";
 import CompetenceContext from "./CompetenceContext";
-import ActiveCompetenceCircle from "./ActiveCompetenceCircle";
-import DisableCompetenceCircle from "./DisableCompetenceCircle";
 
 type Props = {
   x: number;
@@ -12,14 +10,29 @@ type Props = {
 const CompetenceSmallCircles: FC<Props> = ({ x, y, id }) => {
   const competenceContext = useContext(CompetenceContext);
   if (!competenceContext) return null;
-  const { selectedCompetenceId } = competenceContext;
+  const { selectedCompetenceId, handleClick } = competenceContext;
 
   return (
     <>
       {selectedCompetenceId !== id ? (
-        <DisableCompetenceCircle x={x} y={y} id={id} />
+        <circle
+          cx={x}
+          cy={y}
+          r={12}
+          onClick={() => handleClick(id)}
+          fill="#ADADAD"
+        />
       ) : (
-        <ActiveCompetenceCircle x={x} y={y} id={id} />
+        <>
+          <circle cx={x} cy={y} r="15" fill="white" stroke="#00A372" />
+          <circle
+            cx={x}
+            cy={y}
+            r="12"
+            fill="#00A372"
+            onClick={() => handleClick(id)}
+          />
+        </>
       )}
     </>
   );

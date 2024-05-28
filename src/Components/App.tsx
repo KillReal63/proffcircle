@@ -1,4 +1,5 @@
 import CompetenceCircle from "./CompetenceCircle";
+import ConnectingLines from "./ConnectingLines";
 import SkillsCircle from "./SkillsCircle";
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
   return (
     <div className="relative">
       <SkillsCircle centerX={centerX} centerY={centerY} radius={267} />
+      <ConnectingLines />
       <CompetenceCircle centerX={centerX} centerY={centerY} radius={128} />
     </div>
   );

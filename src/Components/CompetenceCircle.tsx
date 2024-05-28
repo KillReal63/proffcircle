@@ -24,7 +24,7 @@ const CompetenceCircle: FC<Props> = ({ centerX, centerY, radius }) => {
 
     if (angle < -1.5) {
       offsetX = 0;
-      offsetY = -40;
+      offsetY = -45;
     }
     if (angle < 0 && angle > -1.5) {
       offsetX = 10;
