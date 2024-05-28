@@ -81,6 +81,15 @@ const CompetenceCircle: FC<Props> = ({ centerX, centerY, radius }) => {
         return (
           <React.Fragment key={index}>
             <CompetenceSmallCircles x={x} y={y} id={el.id} />
+            <rect
+              x={x}
+              y={y}
+              width="80"
+              height="32"
+              rx="6"
+              fill="black"
+              fillOpacity="0.5"
+            />
             <text
               x={x}
               y={y + offsetY}
@@ -90,6 +99,8 @@ const CompetenceCircle: FC<Props> = ({ centerX, centerY, radius }) => {
               }
             >
               {name.map((el, i) => {
+              console.log(el);
+              
                 return (
                   <tspan key={i} x={x + offsetX} dy={12}>
                     {el}
